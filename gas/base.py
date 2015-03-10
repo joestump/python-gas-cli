@@ -32,14 +32,13 @@ class BaseCommand(object):
             dest="credentials_file"),
     )
 
+    def get_store(self, opts):
+        return Storage(opts.credentials_file)
+
     def get_credentials(self, opts):
-        if not os.path.isfile(opts.credentials_file):
-            raise CommandError("Credentials file %s not found." % \
-                opts.credentials_file)
+        store = self.get_store(opts)
 
-        store = Storage(opts.credentials_file)
         credentials = store.get()
-
         if credentials is None or credentials.invalid:
             raise CommandError("Credentials are missing or invalid. Please "
                 "refresh them with `gas authorize`.") 
@@ -47,4 +46,7 @@ class BaseCommand(object):
         return credentials 
 
     def get_client(self, opts):
-        self.get_credentials(opts).authorize(httplib2.Http()) 
+        credentials = self.get_credentials(opts)
+        credentials.refresh(httplib2.Http())
+        return credentials.authorize(httplib2.Http())
+        # client = self.get_credentials(opts).authorize(httplib2.Http()) 

@@ -34,9 +34,9 @@ class Command(BaseCommand):
         flow = client.flow_from_clientsecrets(opts.client_secrets_file,
             ' '.join(self.SCOPES))
 
-        storage = Storage(opts.credentials_file)
-        credentials = storage.get()
+        store = self.get_store(opts)
+        credentials = store.get()
         if credentials is None or credentials.invalid:
-            credentials = tools.run_flow(flow, storage, opts)
+            credentials = tools.run_flow(flow, store, opts)
         else:
             pprint.pprint(json.loads(credentials.to_json()))
