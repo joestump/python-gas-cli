@@ -16,7 +16,7 @@ def get_command(command_name):
 
 
 def run_command(command):
-    parser = OptionParser(option_list=command.option_list)    
+    parser = OptionParser(option_list=command.option_list)
     (opts, args) = parser.parse_args()
     try:
         command.handle(args, opts)
