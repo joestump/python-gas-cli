@@ -26,7 +26,7 @@ Run the following command. It should open a browser tab and push you through the
 
 # Deploying
 
-First grap the file ID of your Google Apps Script from the URL. 
+First grab the file ID of your Google Apps Script from the URL. 
 
 ![example](https://dl.dropboxusercontent.com/s/4hx5pkaywwvfk9j/2015-03-10%20at%202.53%20PM.png)
 
